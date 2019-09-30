@@ -42,13 +42,15 @@ namespace Registration
             {
                 Directory.CreateDirectory(Properties.Settings.Default.PathToData);
             }
-
+            var userList = new List<User>();
             var fullDataPath = Path.Combine(Properties.Settings.Default.PathToData, "Data.json");
             if (!File.Exists(fullDataPath))
             {
-                File.Create(fullDataPath);
+                var dataFile = File.Create(fullDataPath);
+                SaveData(userList);
+                dataFile.Dispose();
             }
-            var userList = new List<User>();
+
             using (var reader = new StreamReader(fullDataPath))
             {
                 var json = reader.ReadToEnd();
@@ -57,7 +59,12 @@ namespace Registration
             foreach (User user in userList)
             {
                 var path = Path.Combine(Properties.Settings.Default.PathToPhoto, user.Guid.ToString() + ".png");
-                user.Image = new BitmapImage(new Uri(path, UriKind.Relative));
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.UriSource = new Uri(path, UriKind.Relative);
+                image.EndInit();
+                image.Freeze(); //commenting this shows the image if the routine is called from the proper thread.
+                user.Image = image;
             }
             return userList;
         }

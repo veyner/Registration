@@ -56,8 +56,9 @@ namespace Registration
                 _fileManager.SavePhoto(user, AvatarImage);
 
                 var emailCode = SendEmail(user.Email);
-                var checkRegWindow = new CheckRegistration(emailCode, this);
-                checkRegWindow.Show();
+                EndRegistration();
+                //var checkRegWindow = new CheckRegistration(emailCode, this);
+                //checkRegWindow.Show();
             }
             else
             {

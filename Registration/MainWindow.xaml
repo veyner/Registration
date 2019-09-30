@@ -11,7 +11,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Image Source="{Binding Image}" />
+                        <Image Height="50" Width="50" Source="{Binding Image}" />
                         <TextBlock Width="50" Height="50" Text="{Binding  Name}" />
                     </StackPanel>
                 </DataTemplate>
