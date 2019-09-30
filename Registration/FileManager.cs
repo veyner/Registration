@@ -44,6 +44,10 @@ namespace Registration
             }
 
             var fullDataPath = Path.Combine(Properties.Settings.Default.PathToData, "Data.json");
+            if (!File.Exists(fullDataPath))
+            {
+                File.Create(fullDataPath);
+            }
             var userList = new List<User>();
             using (var reader = new StreamReader(fullDataPath))
             {
